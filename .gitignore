@@ -97,6 +97,8 @@ bld/
 [Ll]ogs/
 
 # Visual Studio 2015/2017 cache/options directory
+*.hint
+
 .vs/
 verilator/
 Demo/verilator.zip
