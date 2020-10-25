@@ -40,6 +40,11 @@ type
 
   strict private
     m_nextTime: double; // Целевое время
+    m_moduleHanle : THandle; // Хендл загруженной библиотеки
+
+    //----- Методы библиотеки -----
+    // Загрузка модуля
+    procedure LoadModuleLibrary(name : AnsiString);
 
   end;
 
@@ -57,16 +62,25 @@ uses
    , StrUtils
    ;
 
+var
+  //----- Методы из библиотеки модуля -----
+  createModule : function() : Integer; stdcall;
+  destroyModule : procedure(number : Integer); stdcall;
 //*****  Внешние методы *****
 
 constructor  TCppObjectBlock.Create;
 begin
   inherited;
+  m_moduleHanle := 0;
 end;
 
 destructor   TCppObjectBlock.Destroy;
 begin
   inherited;
+  if m_moduleHanle <> 0 then begin
+    FreeLibrary(m_moduleHanle);
+    m_moduleHanle := 0;
+  end;
 end;
 
 function TCppObjectBlock.InfoFunc(Action: integer;aParameter: NativeInt):NativeInt;
@@ -95,6 +109,7 @@ begin
         ErrorEvent(txtCppObj_er_NoSetDll, msError, VisualObject);
         Exit;
       end;
+      LoadModuleLibrary(AnsiString(DllInfo.Main.SearchPath^) + AnsiString(List[3]));
     end
     
   else
@@ -149,6 +164,27 @@ begin
   //SetCondPortCount(VisualObject, count,  pmInput,  PORT_TYPE, sdLeft,  'inport');
 end;
 
+procedure TCppObjectBlock.LoadModuleLibrary(name : AnsiString);
+var
+  fullPathTo: String;
+begin
+  if m_moduleHanle <> 0 then begin // Перегружаем модуль каждый раз при запуске
+    FreeLibrary(m_moduleHanle);
+    m_moduleHanle := 0;
+  end;
+  if NOT FileExists(String(name)) then begin
+    ErrorEvent(txtCppObj_er_ModuleNotFound, msError, VisualObject);
+    Exit;
+  end;
+  fullPathTo := ExpandFileName(String(name));
+  m_moduleHanle := LoadLibrary(PChar(fullPathTo));
+  if m_moduleHanle = 0 then begin
+    ErrorEvent(SysErrorMessage(GetLastError), msError, VisualObject);
+    Exit;
+  end;
+  @createModule := GetProcAddress(m_moduleHanle, 'createModule');
+  @destroyModule := GetProcAddress(m_moduleHanle, 'destroyModule');
+end;
 end.
 
 
