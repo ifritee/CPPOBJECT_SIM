@@ -27,9 +27,24 @@
     <ClCompile Include="UMainModule.cpp">
       <Filter>src\Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="BlockInterface.cpp">
+      <Filter>src\Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="SummaBlock.cpp">
+      <Filter>src\Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UMainModule.h">
+      <Filter>src\Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockInterface.h">
+      <Filter>src\Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="SummaBlock.h">
+      <Filter>src\Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="UConstants.h">
       <Filter>src\Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

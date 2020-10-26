@@ -40,7 +40,8 @@ type
 
   strict private
     m_nextTime: double; // Целевое время
-    m_moduleHanle : THandle; // Хендл загруженной библиотеки
+    m_libHanle : THandle; // Хендл загруженной библиотеки
+    m_moduleIndex : Integer; // Индекс загруженного модуля
 
     //----- Методы библиотеки -----
     // Загрузка модуля
@@ -64,22 +65,28 @@ uses
 
 var
   //----- Методы из библиотеки модуля -----
-  createModule : function() : Integer; stdcall;
-  destroyModule : procedure(number : Integer); stdcall;
+  createCM : function() : Integer; stdcall;
+  destroyCM : procedure(number : Integer); stdcall;
+  infoFuncCM : function(index: Integer; Action : Integer; aParameter : NATIVEINT) : NATIVEINT; stdcall;
 //*****  Внешние методы *****
 
 constructor  TCppObjectBlock.Create;
 begin
   inherited;
-  m_moduleHanle := 0;
+  m_libHanle := 0;
+  m_moduleIndex := -1;
 end;
 
 destructor   TCppObjectBlock.Destroy;
 begin
   inherited;
-  if m_moduleHanle <> 0 then begin
-    FreeLibrary(m_moduleHanle);
-    m_moduleHanle := 0;
+  if m_libHanle <> 0 then begin
+    m_libHanle := 0;
+    if (m_moduleIndex <> -1) AND (@destroyCM <> nil) then begin
+      destroyCM(m_moduleIndex);
+      m_moduleIndex := -1;
+    end;
+    FreeLibrary(m_libHanle);
   end;
 end;
 
@@ -88,32 +95,44 @@ var
   elementInfo : TElementInfo;
   List : TArray<String>;
   trimStr : String;
+  returnCode : NATIVEINT;
 begin
   Result := 0;
-  case Action of
-    i_GetBlockType: begin
-      Result:=t_fun;
-    end;
-    i_GetCount: begin
+//  case Action of
+//    i_GetBlockType: begin
+//      Result:=t_fun;
+//    end;
+//    i_GetCount: begin
+//
+//    end;
+//    i_GetInit: begin
+//      //По умолчанию блок - приоритетный, т.к. он полностью асинхронный
+//      Result:=1;
+//    end;
+//    i_HaveSpetialEditor : begin
 
+//    end
+  if Action = i_HaveSpetialEditor then begin
+    //  Берем имя файла библиотеки
+    DllInfo.Main.GetElementInfo(VisualObject, elementInfo);
+    List := elementInfo.CalcTemplate^.Split([#$D#$A]);
+    if Length(List) < 4 then begin
+      ErrorEvent(txtCppObj_er_NoSetDll, msError, VisualObject);
+      Exit;
     end;
-    i_GetInit: begin
-      //По умолчанию блок - приоритетный, т.к. он полностью асинхронный
-      Result:=1;
+    LoadModuleLibrary(AnsiString(DllInfo.Main.SearchPath^) + AnsiString(List[3]));
+    if @createCM <> nil then begin
+      m_moduleIndex := createCM;
     end;
-    i_HaveSpetialEditor : begin
-      //  Берем имя файла библиотеки
-      DllInfo.Main.GetElementInfo(VisualObject, elementInfo);
-      List := elementInfo.CalcTemplate^.Split([#$D#$A]);
-      if Length(List) < 4 then begin
-        ErrorEvent(txtCppObj_er_NoSetDll, msError, VisualObject);
-        Exit;
-      end;
-      LoadModuleLibrary(AnsiString(DllInfo.Main.SearchPath^) + AnsiString(List[3]));
-    end
-    
-  else
-    Result:=inherited InfoFunc(Action,aParameter);
+  end else begin
+    if (m_moduleIndex = -1) OR (@infoFuncCM = nil) then begin
+      ErrorEvent(txtCppObj_er_NoSetDll + 'infoFuncCM', msError, VisualObject);
+      Exit;
+    end;
+    returnCode := infoFuncCM(m_moduleIndex, Action, aParameter);
+    if returnCode = -1 then begin
+      Result:=inherited InfoFunc(Action,aParameter);
+    end;
   end;
 end;
 
@@ -168,22 +187,23 @@ procedure TCppObjectBlock.LoadModuleLibrary(name : AnsiString);
 var
   fullPathTo: String;
 begin
-  if m_moduleHanle <> 0 then begin // Перегружаем модуль каждый раз при запуске
-    FreeLibrary(m_moduleHanle);
-    m_moduleHanle := 0;
+  if m_libHanle <> 0 then begin // Перегружаем модуль каждый раз при запуске
+    FreeLibrary(m_libHanle);
+    m_libHanle := 0;
   end;
   if NOT FileExists(String(name)) then begin
     ErrorEvent(txtCppObj_er_ModuleNotFound, msError, VisualObject);
     Exit;
   end;
   fullPathTo := ExpandFileName(String(name));
-  m_moduleHanle := LoadLibrary(PChar(fullPathTo));
-  if m_moduleHanle = 0 then begin
+  m_libHanle := LoadLibrary(PChar(fullPathTo));
+  if m_libHanle = 0 then begin
     ErrorEvent(SysErrorMessage(GetLastError), msError, VisualObject);
     Exit;
   end;
-  @createModule := GetProcAddress(m_moduleHanle, 'createModule');
-  @destroyModule := GetProcAddress(m_moduleHanle, 'destroyModule');
+  @createCM := GetProcAddress(m_libHanle, 'createModule');
+  @destroyCM := GetProcAddress(m_libHanle, 'destroyModule');
+  @infoFuncCM := GetProcAddress(m_libHanle, 'infoFunc');
 end;
 end.
 
