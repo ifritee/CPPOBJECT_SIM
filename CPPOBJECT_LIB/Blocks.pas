@@ -68,6 +68,7 @@ var
   createCM : function() : Integer; stdcall;
   destroyCM : procedure(number : Integer); stdcall;
   infoFuncCM : function(index: Integer; Action : Integer; aParameter : NATIVEINT) : NATIVEINT; stdcall;
+  getParamIDCM : function(index: Integer; ParamName: PAnsiChar; var DataType:TDataType;var IsConst: boolean) : NATIVEINT; stdcall;
 //*****  Внешние методы *****
 
 constructor  TCppObjectBlock.Create;
@@ -98,20 +99,6 @@ var
   returnCode : NATIVEINT;
 begin
   Result := 0;
-//  case Action of
-//    i_GetBlockType: begin
-//      Result:=t_fun;
-//    end;
-//    i_GetCount: begin
-//
-//    end;
-//    i_GetInit: begin
-//      //По умолчанию блок - приоритетный, т.к. он полностью асинхронный
-//      Result:=1;
-//    end;
-//    i_HaveSpetialEditor : begin
-
-//    end
   if Action = i_HaveSpetialEditor then begin
     //  Берем имя файла библиотеки
     DllInfo.Main.GetElementInfo(VisualObject, elementInfo);
@@ -155,11 +142,16 @@ begin
   end;
 end;
 
-function TCppObjectBlock.GetParamID(const ParamName:string;var DataType:TDataType;var IsConst: boolean):NativeInt;
+function TCppObjectBlock.GetParamID(const ParamName : string;
+                                    var DataType : TDataType;
+                                    var IsConst : boolean) : NativeInt;
 begin
   Result:=inherited GetParamId(ParamName,DataType,IsConst);
   if Result = -1 then begin
-    
+    if @getParamIDCM <> nil then begin
+      Result:= getParamIDCM(m_moduleIndex, PAnsiChar(AnsiString(ParamName)), DataType, IsConst);
+      ErrorEvent(ParamName, msError, VisualObject);
+    end;
   end;
 end;
 
@@ -204,6 +196,7 @@ begin
   @createCM := GetProcAddress(m_libHanle, 'createModule');
   @destroyCM := GetProcAddress(m_libHanle, 'destroyModule');
   @infoFuncCM := GetProcAddress(m_libHanle, 'infoFunc');
+  @getParamIDCM := GetProcAddress(m_libHanle, 'getParamID');
 end;
 end.
 

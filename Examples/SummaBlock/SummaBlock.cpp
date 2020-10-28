@@ -36,5 +36,23 @@ namespace cppobj
       }
       return -1;
     }
+
+    NATIVEINT SummaBlock::getParamID(const std::string& paramName, TDataType& dataType, bool& isConst)
+    {
+      NATIVEINT result = -1;
+      if (paramName == "var_real") {
+        result = NATIVEINT(&m_valReal);
+        dataType = dtDouble;
+      }
+      else if (paramName == "var_int") {
+        result = NATIVEINT(&m_valInt);
+        dataType = dtInteger;
+      }
+      else if (paramName == "var_bool") {
+        result = NATIVEINT(&m_valBool);
+        dataType = dtBool;
+      }
+      return result;
+    }
   }
 }

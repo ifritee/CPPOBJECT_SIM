@@ -7,6 +7,10 @@ namespace cppobj
   {
     class SummaBlock : public BlockInterface
     {
+      double m_valReal = 0.0;
+      int m_valInt = 0;
+      bool m_valBool = false;
+
     public:
       /** @brief  онструктор */
       explicit SummaBlock();
@@ -14,6 +18,8 @@ namespace cppobj
       virtual ~SummaBlock() override;
       /** @brief »нформационный контроль состо€ни€ модели */
       virtual NATIVEINT infoFunc(int Action, NATIVEINT aParameter) override final;
+      /** @brief ѕолучить тип и идентификатор параметра - по умолчанию соответсвует адресу параметра, тип - вещественное; Result = - 1 - параметр не найден */
+      virtual NATIVEINT getParamID(const std::string& paramName, TDataType& dataType, bool& isConst);
     };
   }
 }

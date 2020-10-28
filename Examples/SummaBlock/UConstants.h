@@ -40,4 +40,45 @@ enum EActionInfoFunc {
   i_CustomInfoFuncStage = 16      ///< @brief Вызов дополнительной стадии информационной функции блока
 };
 
+/** @enum EDataType
+  * @brief Идентификаторы типов данных - базовые */
+enum EDataType {
+  dtDouble = 0,        ///< @brief Data = ^Double
+  dtInteger = 1,       ///< @brief Data = ^integer
+  dtBool = 2,          ///< @brief Data = ^boolean
+  dtColor = 3,         ///< @brief Data = ^TColor
+  dtString = 4,        ///< @brief Data = ^string
+  dtDoubleArray = 5,   ///< @brief Data =  TExtArray (возможно временно) ***
+  dtBitmap = 6,        ///< @brief Data =  TBitmap
+  dtFont = 7,          ///< @brief Data =  TMyFont
+  dtText = 8,          ///< @brief Data = ^string
+  dtPenStyle = 9,      ///< @brief Data = ^TPenStyle
+  dtBrushStyle = 10,   ///< @brief Data = ^TBrushStyle
+  dtFloatFormat = 11,  ///< @brief Data = ^TFloatFormat
+  dtIntArray = 12,     ///< @brief Data =  TIntArray (возможно временно) ***
+  dtMatrix = 13,       ///< @brief Data =  TExtArray2
+  dtPoint = 14,        ///< @brief Data = ^TMyPoint
+  dtEnum = 15,         ///< @brief Data = ^TEnum
+  dtFileName = 16,     ///< @brief Data = ^string
+  dtDataBaseItem = 17, ///< @brief Data = ^string  - путь файла в базе данных
+  dtStream = 18,       ///< @brief Data =  TStream - произвольные данные из файла (звук, видео и т.д.)
+  dtComposite = 19,    ///< @brief Data =  TList   - составной тип данных
+  dtMultiSelect = 20,  ///< @brief Data =  TMultiSelect - список выбора
+  dtComplex = 21,      ///< @brief Data =  TComplex
+  dtCompArray = 22,    ///< @brief Data =  TCompArray
+  dtCompMatrix = 23,   ///< @brief Data =  TCompMatrix
+  dtExternal = 24,     ///< @brief Внешний зарегистрированный тип данных
+  dtDiscreteBool = 25, ///< @brief Data = ^boolean - все операции присваивания и переноса выполняются при помощи оператора ИЛИ
+   //----- дополнительные - внутренние -----
+  dtPointArray = 26,   ///< @brief Data = ^TPointArray
+  dtPrimitiv = 27,     ///< @brief Data =  TPrimitiv
+  dtStrings = 28,      ///< @brief Data =  TStrings
+  dtCFName = 29,       ///< @brief Data = ^string
+  dtPString = 30,      ///< @brief Data = ^Pstream (^^string)
+  dtGraphics = 31      ///< @brief Data =  TGContainer
+};
+
+/** @brief Идентификатор типа данных */
+typedef unsigned char TDataType;
+
 

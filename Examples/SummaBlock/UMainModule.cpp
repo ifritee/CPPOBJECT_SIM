@@ -34,3 +34,12 @@ NATIVEINT infoFunc(int index, int Action, NATIVEINT aParameter)
 	}
 	return -1;
 }
+
+NATIVEINT getParamID(int index, const char * ParamName, TDataType& DataType, bool& IsConst)
+{
+	if (index >= 0 && index < static_cast<int>(CppObjectHandles_vec.size()) && CppObjectHandles_vec[index] != nullptr) {
+		 BlockInterface* process = CppObjectHandles_vec[index];
+		 return process->getParamID(ParamName, DataType, IsConst);
+	}
+	return -1;
+}

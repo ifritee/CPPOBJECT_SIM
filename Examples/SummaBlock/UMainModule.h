@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include "UConstants.h"
 
 #ifdef CPPBLOCK_EXPORTS
@@ -16,5 +18,7 @@ extern "C"
   SUMMABLOCK_API void destroyModule(int);
   /** @brief »нформационный контроль состо€ни€ модели */
   SUMMABLOCK_API NATIVEINT infoFunc(int index, int Action, NATIVEINT aParameter);
+  /** @brief ѕолучить тип и идентификатор параметра - по умолчанию соответсвует адресу параметра, тип - вещественное; Result = - 1 - параметр не найден */
+  SUMMABLOCK_API NATIVEINT getParamID(int index, const char * ParamName, TDataType& DataType, bool& IsConst);
 }
 
