@@ -1,3 +1,5 @@
+#include <limits.h>
+
 #include "SummaBlock.h"
 
 namespace cppobj
@@ -11,12 +13,12 @@ namespace cppobj
   {
     SummaBlock::SummaBlock() : BlockInterface()
     {
-
+      //m_valArray = new double[3];
     }
 
     SummaBlock::~SummaBlock()
     {
-
+      //delete [] m_valArray;
     }
 
     NATIVEINT SummaBlock::infoFunc(int Action, NATIVEINT aParameter)
@@ -52,6 +54,18 @@ namespace cppobj
         result = NATIVEINT(&m_valBool);
         dataType = dtBool;
       }
+      else if (paramName == "var_color") {
+        result = NATIVEINT(&m_valColor);
+        dataType = dtColor;
+      }
+      else if (paramName == "var_string") {
+        result = NATIVEINT(&m_valString);
+        dataType = dtString;
+      }
+      /*else if (paramName == "var_array") {
+        result = NATIVEINT(&m_valArray);
+        dataType = dtDoubleArray;
+      }*/
       return result;
     }
   }

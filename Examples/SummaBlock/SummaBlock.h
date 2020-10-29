@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+
 #include "BlockInterface.h"
 
 namespace cppobj
@@ -10,6 +12,9 @@ namespace cppobj
       double m_valReal = 0.0;
       int m_valInt = 0;
       bool m_valBool = false;
+      char16_t * m_valString; // Delphi-основа сама выделит память и удалит ее
+      int m_valColor = 0;
+      double* m_valArray;     
 
     public:
       /** @brief Конструктор */
