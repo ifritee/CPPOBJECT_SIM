@@ -34,6 +34,10 @@ namespace cppobj
       virtual NATIVEINT infoFunc(int Action, NATIVEINT aParameter) override final;
       /** @brief Получить тип и идентификатор параметра - по умолчанию соответсвует адресу параметра, тип - вещественное; Result = - 1 - параметр не найден */
       virtual NATIVEINT getParamID(const std::string& paramName, TDataType& dataType, bool& isConst);
+      /** @brief Функция для обеспечения изменения визуальных параметров блока */
+      virtual void editFunc() override final;
+      /** @brief RUN-функция блока */
+      virtual NATIVEINT run(double& at, double& h, EWorkState workState) override final;
     };
   }
 }

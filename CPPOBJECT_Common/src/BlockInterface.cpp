@@ -29,4 +29,34 @@ namespace cppobj
     return nullptr;
   }
 
+  int BlockInterface::getPortDataQty()
+  {
+    return static_cast<int>(m_portData.size());
+  }
+
+  int BlockInterface::getCondPortDataQty()
+  {
+    return static_cast<int>(m_condPortData.size());
+  }
+
+  TPortData BlockInterface::getPortData(int number)
+  {
+    if (number < m_portData.size()) {
+      return m_portData[number];
+    }
+    TPortData portData;
+    portData.m_mode = -1;
+    return portData;
+  }
+  
+  TCondPortData BlockInterface::getCondPortData(int number)
+  {
+    if (number < m_condPortData.size()) {
+      return m_condPortData[number];
+    }
+    TCondPortData condPortData;
+    condPortData.m_mode = -1;
+    return condPortData;
+  }
+
 }

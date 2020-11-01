@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <queue>
 
 #include "UConstants.h"
 #include "UMultiSelect.h"
@@ -10,7 +11,7 @@ namespace cppobj
 {
 
   /** @class BlockInterface
-  * @brief Интерфейс для блоков */
+    * @brief Интерфейс для блоков */
   class BlockInterface
   {
   public:
@@ -28,11 +29,26 @@ namespace cppobj
     void addMultiselect(void* multiselect);
     /** @brief Возвращает очередной Мультиселект или nullptr */
     void* getMultiselect(int number);
+    /** @brief Возвращает количество данных для изменения порта */
+    int getPortDataQty();
+    /** @brief Возвращает количество данных для условного изменения порта */
+    int getCondPortDataQty();
+    /** @brief Возвращает данные для изменение порта */
+    TPortData getPortData(int number);
+    /** @brief Возвращает данные для условного изменение порта */
+    TCondPortData getCondPortData(int number);
+    /** @brief Функция для обеспечения изменения визуальных параметров блока */
+    virtual void editFunc() = 0;
+    /** @brief RUN-функция блока */
+    virtual NATIVEINT run(double& at, double& h, EWorkState workState) = 0;
 
   protected:
     int m_multiselectQty = 0; ///< @brief Количество необходимых мультиселектов
     std::vector<UMultiSelect* > m_multiselects; ///< @brief Набор мультиселектов
+    std::vector< TPortData > m_portData; ///< @brief Данные для изменения
+    std::vector< TCondPortData > m_condPortData; ///< @brief Данные для условного изменения
   };
+
   /** @brief Функция создания объекта - не может быть 2 таких */
   extern BlockInterface * CreateBlockObject();
 }

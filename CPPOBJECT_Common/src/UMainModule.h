@@ -26,5 +26,17 @@ extern "C"
   SUMMABLOCK_API void addMultiselect(int index, void * multiselect);
   /** @brief Возвращает очередной Мультиселект или nullptr */
   SUMMABLOCK_API void* getMultiselect(int index, int number);
+  /** @brief Функция для обеспечения изменения визуальных параметров блока */
+  SUMMABLOCK_API void editFunc(int index);
+  /** @brief Возвращает количество данных для изменения порта */
+  SUMMABLOCK_API int getPortDataQty(int index);
+  /** @brief Возвращает количество данных для условного изменения порта */
+  SUMMABLOCK_API int getCondPortDataQty(int index);
+  /** @brief Возвращает данные для изменение порта */
+  SUMMABLOCK_API TPortData getPortData(int index, int number);
+  /** @brief Возвращает данные для условного изменение порта */
+  SUMMABLOCK_API TCondPortData getCondPortData(int index, int number);
+  /** @brief RUN-функция блока, если возвращает значение > 0 - то расчёт будет аварийно остановлен */
+  SUMMABLOCK_API NATIVEINT runFunc(int index, double & at, double & h, int action);
 }
 

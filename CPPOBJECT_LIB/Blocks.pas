@@ -23,6 +23,23 @@ uses
    ;
 
 type
+  //----- Данные для изменения порта -----
+  TPortData = record
+    m_count: Integer;  //  количество
+    m_mode: Integer;   //  режим по умолчанию
+    m_type: Integer;   //  тип связи по умолчанию
+    m_side: byte;      //  расположение порта по умолчанию
+  end;
+
+  //----- Данные для условного изменения порта -----
+  TCondPortData = record
+    m_count:Integer;          //  количество портов
+    m_mode: Integer;          //  режим портов
+    m_type: Integer;          //  тип связи портов
+    m_side: byte;             //  расположение порта по умолчанию
+    m_name: Array [0..127] of AnsiChar; //  шаблон имени портов
+    m_portVariant: Integer;   //  вариант порта
+  end;
   // Блок - встроенный клиент OPC
   // по умолчанию настроен на тестовый сервер Matricon
   TCppObjectBlock = class(TRunObject)
@@ -73,6 +90,12 @@ var
   getMultiselectQty : function(index : Integer) : Integer; stdcall;
   addMultiselect : procedure(index : Integer; multiselect : Pointer); stdcall;
   getMultiselect : function(index : Integer; number : Integer) : Pointer; stdcall;
+  editFuncCM : procedure(index : Integer); stdcall;
+  getPortDataQty : function(index : Integer) : Integer; stdcall;
+  getCondPortDataQty : function(index : Integer) : Integer; stdcall;
+  getPortData : function(index : Integer; number : Integer) : TPortData; stdcall;
+  getCondPortData : function(index : Integer; number : Integer) : TCondPortData; stdcall;
+  runFuncCM : function(index : Integer; var at : Double; var h : Double; Action : Integer) : NativeInt; stdcall;
   //*****  Внешние методы *****
 
 constructor  TCppObjectBlock.Create;
@@ -108,7 +131,6 @@ function TCppObjectBlock.InfoFunc(Action: integer;aParameter: NativeInt):NativeI
 var
   elementInfo : TElementInfo;
   List : TArray<String>;
-  trimStr : String;
   returnCode : NATIVEINT;
   multiSelect : TMultiSelect;
   I : Integer;
@@ -148,20 +170,9 @@ end;
 
 function TCppObjectBlock.RunFunc;
 begin
- Result := r_Success;
-  case Action of
-    f_Stop: begin
-     
-    end;
-    f_InitObjects: begin
-     
-    end;
-    f_InitState: begin
-      
-    end;
-    f_GoodStep: begin
-      
-    end;
+  Result := r_Fail;
+  if @runFuncCM <> nil then begin
+    Result := runFuncCM(m_moduleIndex, at, h, Action);
   end;
 end;
 
@@ -192,9 +203,38 @@ end;
 
 procedure TCppObjectBlock.EditFunc;
 var
-  count: Integer;
+  I: Integer;
+  portData : TPortData;
+  condPortData: TCondPortData;
 begin
-  //SetCondPortCount(VisualObject, count,  pmInput,  PORT_TYPE, sdLeft,  'inport');
+  if @editFuncCM <> nil then begin
+    editFuncCM(m_moduleIndex); // Запуск формирования данных управления визуализацией
+    //-----
+    if (@getPortDataQty <> nil) AND (@getPortData <> nil) then begin
+      for I := 0 to getPortDataQty(m_moduleIndex) -1 do begin
+        portData := getPortData(m_moduleIndex, I);
+        if portData.m_mode > -1 then begin
+          SetPortCount(VisualObject, portData.m_count, TPortMode(portData.m_mode), portData.m_type,
+                       portData.m_side);
+        end;
+      end;
+    end;
+    //-----
+    if (@getCondPortDataQty <> nil) AND (@getCondPortData <> nil) then begin
+      for I := 0 to getCondPortDataQty(m_moduleIndex) -1 do begin
+        condPortData := getCondPortData(m_moduleIndex, I);
+        if condPortData.m_mode > -1 then begin
+          SetCondPortCount(  VisualObject
+                           , condPortData.m_count
+                           , TPortMode(condPortData.m_mode)
+                           , condPortData.m_type
+                           , condPortData.m_side
+                           , String(condPortData.m_name)
+                           , condPortData.m_portVariant);
+        end;
+      end;
+    end;
+  end;
 end;
 
 procedure TCppObjectBlock.LoadModuleLibrary(name : AnsiString);
@@ -222,6 +262,12 @@ begin
   @getMultiselectQty := GetProcAddress(m_libHanle, 'getMultiselectQty');
   @addMultiselect := GetProcAddress(m_libHanle, 'addMultiselect');
   @getMultiselect := GetProcAddress(m_libHanle, 'getMultiselect');
+  @editFuncCM := GetProcAddress(m_libHanle, 'editFunc');
+  @getPortDataQty := GetProcAddress(m_libHanle, 'getPortDataQty');
+  @getCondPortDataQty := GetProcAddress(m_libHanle, 'getCondPortDataQty');
+  @getPortData := GetProcAddress(m_libHanle, 'getPortData');
+  @getCondPortData := GetProcAddress(m_libHanle, 'getCondPortData');
+  @runFuncCM := GetProcAddress(m_libHanle, 'runFunc');
 end;
 end.
 

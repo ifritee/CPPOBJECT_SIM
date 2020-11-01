@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #ifdef _WIN64
 #define NATIVEINT __int64
 #else
@@ -78,8 +80,66 @@ enum EDataType {
   dtGraphics = 31      ///< @brief Data =  TGContainer
 };
 
+/** @enum EWorkState 
+  * @brief Флаги вызова run-функции блока*/
+enum EWorkState
+{
+  f_InitState = 1,      ///< @brief Запись начальных состояний
+  f_UpdateOuts = 2,     ///< @brief Обновить выходы на предварительном шаге
+  f_GoodStep = 3,       ///< @brief Обновить выходы на "хорошем" шаге
+  f_GetDeri = 4,        ///< @brief Вычислить значения правых частей дифференциальных уравнений
+  f_GetAlgFun = 5,      ///< @brief Вычислить значения правых частей алгебраических уравнений
+  f_SetState = 6,       ///< @brief Вычислить значения дискретных переменных состояния (после шага интегрирования)
+  f_UpdateProps = 7,    ///< @brief Обновить список параметров (с учётом флага изменяемости)
+  f_UpdateJacoby = 9,   ///< @brief Обновить выходы блока при расчёте матрицы Якоби (эквивалент f_UpdateOuts с дополнительным вызовом обновления дискретных состояний)
+  f_RestoreOuts = 10,   ///< @brief Обновить выходы после рестарта (только если очень надо, т.к. выходы всё равно будут запоминаться)
+  f_SetAlgOut = 11,     ///< @brief Выставить выходы блока, содержащих алгебраические переменные
+  f_InitAlgState = 12,  ///< @brief Выставить начальное приближение для алгебраические переменных
+  f_Stop = 13,          ///< @brief Вызывается при остановке расчёта (конец моделирования)
+  f_InitObjects = 14,   ///< @brief Инициализация объектов, массивов и т.д. (сразу после сортировки) (начало моделирования)
+  f_EndTimeTask = 15    ///< @brief Вызывается по окончании выполнения задачи (для проверки оптимизации и т.п.)
+};
+
+/** @enum ELogLevel 
+  * @brief Уровни предупреждения */
+enum ELogLevel {
+  LLInfo,         //Просто информация
+  LLError,        //Сообщения об ошибке
+  LLWarning,      //Предупреждение
+  LLHidden        //Скрытое сообщение
+};
+
+/** @enum EFunctionResult
+  * Возможные результаты функций */
+enum EFunctionResult {
+  r_Success = 0, ///< @brief Нет ошибки
+  r_Fail = 1     ///< @brief Возникла ошибка
+};
+
+
 /** @brief Идентификатор типа данных */
 typedef unsigned char TDataType;
 
 /** @brief Данные о точке */
 typedef struct { double X; double Y; } TMyPoint;
+
+/** @brief Данные для изменения порта */
+typedef struct {
+  int m_count;  // количество
+  int m_mode;   // режим по умолчанию
+  int m_type;   // тип связи по умолчанию
+  unsigned char m_side; //  расположение порта по умолчанию
+} TPortData;
+
+/** @brief Данные для условного изменения порта */
+typedef struct {
+  int m_count;          //  количество портов
+  int m_mode;           //  режим портов
+  int m_type;           //  тип связи портов
+  unsigned char m_side; //  расположение порта по умолчанию
+  char m_name[128];     //  шаблон имени портов
+  int m_portVariant;    //  вариант порта
+} TCondPortData;
+
+/** @brief тип для хранения лог-информации */
+typedef struct { std::string m_text; int m_level; } TLoggerData;

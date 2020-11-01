@@ -174,15 +174,17 @@
     <ClCompile Include="..\..\CPPOBJECT_Common\src\UMainModule.cpp" />
     <ClCompile Include="..\..\CPPOBJECT_Common\src\UMultiSelect.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
-    <ClCompile Include="SummaBlock.cpp" />
+    <ClCompile Include="src\SummaBlock.cpp" />
+    <ClCompile Include="ULogger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CPPOBJECT_Common\src\BlockInterface.h" />
     <ClInclude Include="..\..\CPPOBJECT_Common\src\stringmethods.h" />
     <ClInclude Include="..\..\CPPOBJECT_Common\src\UConstants.h" />
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\ULogger.h" />
     <ClInclude Include="..\..\CPPOBJECT_Common\src\UMainModule.h" />
     <ClInclude Include="..\..\CPPOBJECT_Common\src\UMultiSelect.h" />
-    <ClInclude Include="SummaBlock.h" />
+    <ClInclude Include="src\SummaBlock.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

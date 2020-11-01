@@ -16,11 +16,8 @@ uses
   SimpleShareMem,
   Classes,
   Info in 'Info.pas',
-  ece0206_texts in 'ece0206_texts.pas',
-  Blocks in 'Blocks.pas',
-  ECE0206Library in 'ECE0206Library.pas',
-  URxTxThread in 'URxTxThread.pas',
-  URoutineData in 'URoutineData.pas';
+  CppObject_texts in 'CppObject_texts.pas',
+  Blocks in 'Blocks.pas';
 
 {$R *.res}
 

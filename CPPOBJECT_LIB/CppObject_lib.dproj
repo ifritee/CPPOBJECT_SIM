@@ -938,11 +938,8 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="Info.pas"/>
-        <DCCReference Include="ece0206_texts.pas"/>
+        <DCCReference Include="CppObject_texts.pas"/>
         <DCCReference Include="Blocks.pas"/>
-        <DCCReference Include="ECE0206Library.pas"/>
-        <DCCReference Include="URxTxThread.pas"/>
-        <DCCReference Include="URoutineData.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

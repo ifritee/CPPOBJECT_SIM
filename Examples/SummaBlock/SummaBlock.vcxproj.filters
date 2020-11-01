@@ -20,9 +20,6 @@
     <ClCompile Include="src\dllmain.cpp">
       <Filter>src\Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="SummaBlock.cpp">
-      <Filter>src\Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\CPPOBJECT_Common\src\BlockInterface.cpp">
       <Filter>CPPOBJECT_Common</Filter>
     </ClCompile>
@@ -35,11 +32,14 @@
     <ClCompile Include="..\..\CPPOBJECT_Common\src\stringmethods.cpp">
       <Filter>CPPOBJECT_Common</Filter>
     </ClCompile>
+    <ClCompile Include="src\SummaBlock.cpp">
+      <Filter>src\Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="ULogger.cpp">
+      <Filter>CPPOBJECT_Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SummaBlock.h">
-      <Filter>src\Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\CPPOBJECT_Common\src\BlockInterface.h">
       <Filter>CPPOBJECT_Common</Filter>
     </ClInclude>
@@ -53,6 +53,12 @@
       <Filter>CPPOBJECT_Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\CPPOBJECT_Common\src\stringmethods.h">
+      <Filter>CPPOBJECT_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SummaBlock.h">
+      <Filter>src\Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\ULogger.h">
       <Filter>CPPOBJECT_Common</Filter>
     </ClInclude>
   </ItemGroup>
