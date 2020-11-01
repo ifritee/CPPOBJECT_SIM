@@ -1,9 +1,8 @@
-#include <limits.h>
-
 #include "SummaBlock.h"
 
 namespace cppobj
 {
+
   BlockInterface* CreateBlockObject()
   {
     return new cppobjsum::SummaBlock();
@@ -13,12 +12,12 @@ namespace cppobj
   {
     SummaBlock::SummaBlock() : BlockInterface()
     {
-      //m_valArray = new double[3];
+      m_multiselectQty = 1;
     }
 
     SummaBlock::~SummaBlock()
     {
-      //delete [] m_valArray;
+
     }
 
     NATIVEINT SummaBlock::infoFunc(int Action, NATIVEINT aParameter)
@@ -62,10 +61,70 @@ namespace cppobj
         result = NATIVEINT(&m_valString);
         dataType = dtString;
       }
-      /*else if (paramName == "var_array") {
-        result = NATIVEINT(&m_valArray);
-        dataType = dtDoubleArray;
-      }*/
+      else if (paramName == "var_text") {
+        result = NATIVEINT(&m_valText);
+        dataType = dtText;
+      }
+//----- Тут нужно подумать как передавать данные -----
+      else if (paramName == "var_array") {
+//        result = NATIVEINT(m_valArray);
+//        dataType = dtDoubleArray;
+      }
+      else if (paramName == "var_font") {
+        //        result = NATIVEINT(m_valFont);
+        //        dataType = dtFont;
+      }
+      else if (paramName == "var_line_style") {
+         result = NATIVEINT(&m_valLineStyle);
+         dataType = dtPenStyle;
+      }
+      else if (paramName == "var_brush_style") {
+        result = NATIVEINT(&m_valBrushStyle);
+        dataType = dtBrushStyle;
+      }
+      else if (paramName == "var_float_format") {
+        result = NATIVEINT(&m_valFloatFormat);
+        dataType = dtFloatFormat;
+      }
+      else if (paramName == "var_int_array") {
+        //result = NATIVEINT(&m_valIntArray);
+        //dataType = dtIntArray;
+      }
+      else if (paramName == "var_matrix") {
+        //result = NATIVEINT(&m_valMatrix);
+        //dataType = dtMatrix;
+      }
+      else if (paramName == "var_point") {
+        result = NATIVEINT(&m_valPoint);
+        dataType = dtPoint;
+      }
+      else if (paramName == "var_enum") {
+        result = NATIVEINT(&m_valEnum);
+        dataType = dtEnum;
+      }
+      else if (paramName == "var_file_name") {
+        result = NATIVEINT(&m_valFileName);
+        dataType = dtFileName;
+      }
+      else if (paramName == "var_file_db") {
+        result = NATIVEINT(&m_valFileNameDB);
+        dataType = dtDataBaseItem;
+      }
+      else if (paramName == "var_stream") {
+//        result = NATIVEINT(&m_valStream);
+//        dataType = dtStream;
+      }
+      else if (paramName == "var_composite") {
+//        result = NATIVEINT(&m_valComposite);
+//        dataType = dtComposite;
+      }
+      else if (paramName == "var_multi") {
+        if (m_multiselects[0] != nullptr) {
+          m_multiSelect = m_multiselects[0];
+          result = NATIVEINT(m_multiSelect->creator());
+          dataType = dtMultiSelect;
+        }
+      }
       return result;
     }
   }

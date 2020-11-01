@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Файлы ресурсов">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{0ed34a28-f8c8-47f9-b859-8b68f72a6355}</UniqueIdentifier>
     </Filter>
@@ -16,36 +12,48 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="cpp.hint" />
+    <Filter Include="CPPOBJECT_Common">
+      <UniqueIdentifier>{8db17dc5-2c2b-428b-8ab9-02131b13ad72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllmain.cpp">
       <Filter>src\Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="UMainModule.cpp">
-      <Filter>src\Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="BlockInterface.cpp">
-      <Filter>src\Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="SummaBlock.cpp">
       <Filter>src\Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\CPPOBJECT_Common\src\BlockInterface.cpp">
+      <Filter>CPPOBJECT_Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CPPOBJECT_Common\src\UMainModule.cpp">
+      <Filter>CPPOBJECT_Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CPPOBJECT_Common\src\UMultiSelect.cpp">
+      <Filter>CPPOBJECT_Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CPPOBJECT_Common\src\stringmethods.cpp">
+      <Filter>CPPOBJECT_Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="UMainModule.h">
-      <Filter>src\Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="BlockInterface.h">
-      <Filter>src\Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="SummaBlock.h">
       <Filter>src\Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="UConstants.h">
-      <Filter>src\Файлы заголовков</Filter>
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\BlockInterface.h">
+      <Filter>CPPOBJECT_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\UConstants.h">
+      <Filter>CPPOBJECT_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\UMainModule.h">
+      <Filter>CPPOBJECT_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\UMultiSelect.h">
+      <Filter>CPPOBJECT_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\stringmethods.h">
+      <Filter>CPPOBJECT_Common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

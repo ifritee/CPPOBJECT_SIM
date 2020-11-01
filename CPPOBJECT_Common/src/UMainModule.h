@@ -20,5 +20,11 @@ extern "C"
   SUMMABLOCK_API NATIVEINT infoFunc(int index, int Action, NATIVEINT aParameter);
   /** @brief Получить тип и идентификатор параметра - по умолчанию соответсвует адресу параметра, тип - вещественное; Result = - 1 - параметр не найден */
   SUMMABLOCK_API NATIVEINT getParamID(int index, const char * ParamName, TDataType& DataType, bool& IsConst);
+  /** @brief Возвращает необходимое коичество мультиселектов */
+  SUMMABLOCK_API int getMultiselectQty(int index);
+  /** @brief Добавление очередного Multiselect */
+  SUMMABLOCK_API void addMultiselect(int index, void * multiselect);
+  /** @brief Возвращает очередной Мультиселект или nullptr */
+  SUMMABLOCK_API void* getMultiselect(int index, int number);
 }
 

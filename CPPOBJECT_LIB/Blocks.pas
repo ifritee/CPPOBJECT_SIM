@@ -18,6 +18,8 @@ uses
    , DataTypes
    , RunObjts
    , Winapi.Windows
+   //, Classes, MBTYArrays, DataTypes, SysUtils, RunObjts, math, tbls,
+   //  TimeWinFuncs, FourierFuncs, ufftwrapper, uBaseFiltersCalc
    ;
 
 type
@@ -42,7 +44,6 @@ type
     m_nextTime: double; // Целевое время
     m_libHanle : THandle; // Хендл загруженной библиотеки
     m_moduleIndex : Integer; // Индекс загруженного модуля
-
     //----- Методы библиотеки -----
     // Загрузка модуля
     procedure LoadModuleLibrary(name : AnsiString);
@@ -69,7 +70,10 @@ var
   destroyCM : procedure(number : Integer); stdcall;
   infoFuncCM : function(index: Integer; Action : Integer; aParameter : NATIVEINT) : NATIVEINT; stdcall;
   getParamIDCM : function(index: Integer; ParamName: PAnsiChar; var DataType:TDataType;var IsConst: boolean) : NATIVEINT; stdcall;
-//*****  Внешние методы *****
+  getMultiselectQty : function(index : Integer) : Integer; stdcall;
+  addMultiselect : procedure(index : Integer; multiselect : Pointer); stdcall;
+  getMultiselect : function(index : Integer; number : Integer) : Pointer; stdcall;
+  //*****  Внешние методы *****
 
 constructor  TCppObjectBlock.Create;
 begin
@@ -79,11 +83,20 @@ begin
 end;
 
 destructor   TCppObjectBlock.Destroy;
+var
+  I: Integer;
+  multiselect : TMultiselect;
 begin
   inherited;
   if m_libHanle <> 0 then begin
     m_libHanle := 0;
     if (m_moduleIndex <> -1) AND (@destroyCM <> nil) then begin
+      if (@getMultiselectQty <> nil) AND (@getMultiselect <> nil) then begin
+        for I := 0 to getMultiselectQty(m_moduleIndex) - 1 do begin
+          Pointer(multiselect) := getMultiselect(m_moduleIndex, I);
+          multiselect.Free;
+        end;
+      end;
       destroyCM(m_moduleIndex);
       m_moduleIndex := -1;
     end;
@@ -97,6 +110,8 @@ var
   List : TArray<String>;
   trimStr : String;
   returnCode : NATIVEINT;
+  multiSelect : TMultiSelect;
+  I : Integer;
 begin
   Result := 0;
   if Action = i_HaveSpetialEditor then begin
@@ -111,6 +126,14 @@ begin
     if @createCM <> nil then begin
       m_moduleIndex := createCM;
     end;
+    if (@getMultiselectQty <> nil) AND (@addMultiselect <> nil) then begin
+      for I := 0 to getMultiselectQty(m_moduleIndex) - 1 do begin
+        multiSelect := TMultiSelect.Create;
+        addMultiselect(m_moduleIndex, multiSelect);
+      end;
+    end;
+
+
   end else begin
     if (m_moduleIndex = -1) OR (@infoFuncCM = nil) then begin
       ErrorEvent(txtCppObj_er_NoSetDll + 'infoFuncCM', msError, VisualObject);
@@ -150,7 +173,6 @@ begin
   if Result = -1 then begin
     if @getParamIDCM <> nil then begin
       Result:= getParamIDCM(m_moduleIndex, PAnsiChar(AnsiString(ParamName)), DataType, IsConst);
-      ErrorEvent(ParamName, msError, VisualObject);
     end;
   end;
 end;
@@ -197,6 +219,9 @@ begin
   @destroyCM := GetProcAddress(m_libHanle, 'destroyModule');
   @infoFuncCM := GetProcAddress(m_libHanle, 'infoFunc');
   @getParamIDCM := GetProcAddress(m_libHanle, 'getParamID');
+  @getMultiselectQty := GetProcAddress(m_libHanle, 'getMultiselectQty');
+  @addMultiselect := GetProcAddress(m_libHanle, 'addMultiselect');
+  @getMultiselect := GetProcAddress(m_libHanle, 'getMultiselect');
 end;
 end.
 

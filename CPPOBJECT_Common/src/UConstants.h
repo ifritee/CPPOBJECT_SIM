@@ -81,4 +81,5 @@ enum EDataType {
 /** @brief Идентификатор типа данных */
 typedef unsigned char TDataType;
 
-
+/** @brief Данные о точке */
+typedef struct { double X; double Y; } TMyPoint;

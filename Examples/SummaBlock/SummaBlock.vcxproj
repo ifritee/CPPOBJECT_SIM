@@ -96,7 +96,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\CPPOBJECT_Common\src;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -116,7 +116,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\CPPOBJECT_Common\src;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -136,7 +136,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\CPPOBJECT_Common\src;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -157,7 +157,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\CPPOBJECT_Common\src;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -169,19 +169,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="cpp.hint" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="BlockInterface.cpp" />
+    <ClCompile Include="..\..\CPPOBJECT_Common\src\BlockInterface.cpp" />
+    <ClCompile Include="..\..\CPPOBJECT_Common\src\stringmethods.cpp" />
+    <ClCompile Include="..\..\CPPOBJECT_Common\src\UMainModule.cpp" />
+    <ClCompile Include="..\..\CPPOBJECT_Common\src\UMultiSelect.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
     <ClCompile Include="SummaBlock.cpp" />
-    <ClCompile Include="UMainModule.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BlockInterface.h" />
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\BlockInterface.h" />
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\stringmethods.h" />
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\UConstants.h" />
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\UMainModule.h" />
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\UMultiSelect.h" />
     <ClInclude Include="SummaBlock.h" />
-    <ClInclude Include="UConstants.h" />
-    <ClInclude Include="UMainModule.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

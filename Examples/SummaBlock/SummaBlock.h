@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <limits.h>
 
 #include "BlockInterface.h"
 
@@ -14,7 +15,15 @@ namespace cppobj
       bool m_valBool = false;
       char16_t * m_valString; // Delphi-основа сама выделит память и удалит ее
       int m_valColor = 0;
-      double* m_valArray;     
+      char16_t* m_valText;
+      NATIVEINT m_valLineStyle;
+      NATIVEINT m_valBrushStyle;
+      NATIVEINT m_valFloatFormat;
+      TMyPoint m_valPoint;
+      NATIVEINT m_valEnum;
+      char16_t* m_valFileName;
+      char16_t* m_valFileNameDB;
+      UMultiSelect* m_multiSelect = nullptr;
 
     public:
       /** @brief Конструктор */
