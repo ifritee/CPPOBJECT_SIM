@@ -38,6 +38,15 @@
     <ClCompile Include="ULogger.cpp">
       <Filter>CPPOBJECT_Common</Filter>
     </ClCompile>
+    <ClCompile Include="URunObject.cpp">
+      <Filter>src\Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="UIntArray.cpp">
+      <Filter>src\Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="UPtrExtArray.cpp">
+      <Filter>src\Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CPPOBJECT_Common\src\BlockInterface.h">
@@ -60,6 +69,15 @@
     </ClInclude>
     <ClInclude Include="..\..\CPPOBJECT_Common\src\ULogger.h">
       <Filter>CPPOBJECT_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\URunObject.h">
+      <Filter>src\Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\UIntArray.h">
+      <Filter>src\Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\UPtrExtArray.h">
+      <Filter>src\Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

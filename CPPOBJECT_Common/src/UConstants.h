@@ -143,3 +143,5 @@ typedef struct {
 
 /** @brief тип для хранения лог-информации */
 typedef struct { std::string m_text; int m_level; } TLoggerData;
+
+constexpr int MAX_ER_LENGTH = 1024; ///< @brief Максимальный размер строки ошибки

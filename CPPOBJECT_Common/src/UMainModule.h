@@ -13,7 +13,7 @@
 extern "C" 
 {
   /** @brief Создание модуля (возвращает ID модуля)*/
-  SUMMABLOCK_API int createModule();
+  SUMMABLOCK_API int createModule(void *);
   /** @brief Удаление модуля */
   SUMMABLOCK_API void destroyModule(int);
   /** @brief Информационный контроль состояния модели */
@@ -38,5 +38,7 @@ extern "C"
   SUMMABLOCK_API TCondPortData getCondPortData(int index, int number);
   /** @brief RUN-функция блока, если возвращает значение > 0 - то расчёт будет аварийно остановлен */
   SUMMABLOCK_API NATIVEINT runFunc(int index, double & at, double & h, int action);
+  /** @brief Устанавливает последнюю ошибку и возвращает количество оставшихся ошибок в очереди */
+  SUMMABLOCK_API int lastError(int index, char * error, int& code);
 }
 

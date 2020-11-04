@@ -27,7 +27,7 @@ namespace cppobj
 
     public:
       /** @brief Конструктор */
-      explicit SummaBlock();
+      explicit SummaBlock(void *);
       /** @brief Деструктор */
       virtual ~SummaBlock() override;
       /** @brief Информационный контроль состояния модели */

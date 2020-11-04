@@ -1,18 +1,21 @@
 #include <string.h>
 
 #include "SummaBlock.h"
+#include "ULogger.h"
+#include "URunObject.h"
+#include "UIntArray.h"
 
 namespace cppobj
 {
 
-  BlockInterface* CreateBlockObject()
+  BlockInterface* CreateBlockObject(void * object)
   {
-    return new cppobjsum::SummaBlock();
+    return new cppobjsum::SummaBlock(object);
   }
 
   namespace cppobjsum
   {
-    SummaBlock::SummaBlock() : BlockInterface()
+    SummaBlock::SummaBlock(void * object) : BlockInterface(object)
     {
       m_multiselectQty = 1;
     }
@@ -29,6 +32,7 @@ namespace cppobj
         return t_fun;
       } break;
       case i_GetCount: {
+        m_runObject->cY()[0] = 15;
         return 0;
       } break;
       case i_GetInit: {
@@ -151,7 +155,6 @@ namespace cppobj
       data.m_side = 0;
       data.m_type = 0;
       m_condPortData.push_back(data);*/
-
     }
 
     NATIVEINT SummaBlock::run(double& at, double& h, EWorkState workState)

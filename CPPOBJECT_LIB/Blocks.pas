@@ -57,14 +57,18 @@ type
                           ExecutePropScript:TExecutePropScript
                           ); override;
 
+  const
+    MAX_ER_LENGTH = 1024; // Максимальный размер строки ошибки
+
   strict private
     m_nextTime: double; // Целевое время
     m_libHanle : THandle; // Хендл загруженной библиотеки
     m_moduleIndex : Integer; // Индекс загруженного модуля
+    m_error: Array [0..MAX_ER_LENGTH - 1] of AnsiChar;
     //----- Методы библиотеки -----
     // Загрузка модуля
     procedure LoadModuleLibrary(name : AnsiString);
-
+    procedure ShowLog();
   end;
 
 implementation
@@ -83,7 +87,7 @@ uses
 
 var
   //----- Методы из библиотеки модуля -----
-  createCM : function() : Integer; stdcall;
+  createCM : function(runObj: PVOID) : Integer; stdcall;
   destroyCM : procedure(number : Integer); stdcall;
   infoFuncCM : function(index: Integer; Action : Integer; aParameter : NATIVEINT) : NATIVEINT; stdcall;
   getParamIDCM : function(index: Integer; ParamName: PAnsiChar; var DataType:TDataType;var IsConst: boolean) : NATIVEINT; stdcall;
@@ -96,6 +100,8 @@ var
   getPortData : function(index : Integer; number : Integer) : TPortData; stdcall;
   getCondPortData : function(index : Integer; number : Integer) : TCondPortData; stdcall;
   runFuncCM : function(index : Integer; var at : Double; var h : Double; Action : Integer) : NativeInt; stdcall;
+  lastError : function(index : Integer; error : PAnsiChar; var code : Integer) : Integer; stdcall;
+
   //*****  Внешние методы *****
 
 constructor  TCppObjectBlock.Create;
@@ -136,7 +142,11 @@ var
   I : Integer;
 begin
   Result := 0;
-  if Action = i_HaveSpetialEditor then begin
+  if Action = i_GetCount then begin
+    cY[0] := 12;
+
+  end;
+  if (Action = i_HaveSpetialEditor) AND (m_moduleIndex = -1) then begin
     //  Берем имя файла библиотеки
     DllInfo.Main.GetElementInfo(VisualObject, elementInfo);
     List := elementInfo.CalcTemplate^.Split([#$D#$A]);
@@ -146,7 +156,7 @@ begin
     end;
     LoadModuleLibrary(AnsiString(DllInfo.Main.SearchPath^) + AnsiString(List[3]));
     if @createCM <> nil then begin
-      m_moduleIndex := createCM;
+      m_moduleIndex := createCM(Pointer(self));
     end;
     if (@getMultiselectQty <> nil) AND (@addMultiselect <> nil) then begin
       for I := 0 to getMultiselectQty(m_moduleIndex) - 1 do begin
@@ -154,14 +164,13 @@ begin
         addMultiselect(m_moduleIndex, multiSelect);
       end;
     end;
-
-
   end else begin
     if (m_moduleIndex = -1) OR (@infoFuncCM = nil) then begin
       ErrorEvent(txtCppObj_er_NoSetDll + 'infoFuncCM', msError, VisualObject);
       Exit;
     end;
     returnCode := infoFuncCM(m_moduleIndex, Action, aParameter);
+    ShowLog;
     if returnCode = -1 then begin
       Result:=inherited InfoFunc(Action,aParameter);
     end;
@@ -169,10 +178,13 @@ begin
 end;
 
 function TCppObjectBlock.RunFunc;
+var
+  code, retCode : Integer;
 begin
   Result := r_Fail;
   if @runFuncCM <> nil then begin
     Result := runFuncCM(m_moduleIndex, at, h, Action);
+    ShowLog;
   end;
 end;
 
@@ -268,6 +280,19 @@ begin
   @getPortData := GetProcAddress(m_libHanle, 'getPortData');
   @getCondPortData := GetProcAddress(m_libHanle, 'getCondPortData');
   @runFuncCM := GetProcAddress(m_libHanle, 'runFunc');
+  @lastError := GetProcAddress(m_libHanle, 'lastError');
+end;
+
+procedure TCppObjectBlock.ShowLog;
+var
+  retCode, code : Integer;
+begin
+  repeat
+      retCode := lastError(m_moduleIndex, @m_error, code);
+      if retCode >= 0 then begin
+        ErrorEvent('CppObj: ' + String(m_error), TMsgType(code), VisualObject);
+      end;
+    until retCode <= 0;
 end;
 end.
 

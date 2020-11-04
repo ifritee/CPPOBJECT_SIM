@@ -1,4 +1,5 @@
 #include <vector>
+#include <string.h>
 
 #include "UMainModule.h"
 #include "BlockInterface.h"
@@ -7,10 +8,10 @@
 using namespace cppobj;
 static std::vector<BlockInterface*> CppObjectHandles_vec; ///< @brief Набор со всеми дескрипторами блоков
 
-int createModule()
+int createModule(void * object)
 {
 	int index = static_cast<int>(CppObjectHandles_vec.size());
-	BlockInterface* process = CreateBlockObject();
+	BlockInterface* process = CreateBlockObject(object);
 	if (!process) {
 		return -1;
 	}
@@ -125,6 +126,20 @@ NATIVEINT runFunc(int index, double& at, double& h, int action)
 	if (index >= 0 && index < static_cast<int>(CppObjectHandles_vec.size()) && CppObjectHandles_vec[index] != nullptr) {
 		BlockInterface* process = CppObjectHandles_vec[index];
 		return process->run(at, h, static_cast<EWorkState>(action));
+	}
+	return -1;
+}
+
+int lastError(int index, char* error, int & code)
+{
+	if (index >= 0 && index < static_cast<int>(CppObjectHandles_vec.size()) && CppObjectHandles_vec[index] != nullptr) {
+		TLoggerData data;
+		int retCode = ULogger::instance()->last(data);
+		if (retCode >= 0) { // Только если есть данные
+			strcpy_s(error, MAX_ER_LENGTH, data.m_text.c_str());
+			code = data.m_level;
+			return retCode;
+		}
 	}
 	return -1;
 }

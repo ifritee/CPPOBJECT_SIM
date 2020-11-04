@@ -1,9 +1,11 @@
 #include "BlockInterface.h"
+#include "URunObject.h"
 
 namespace cppobj
 {
 
-  BlockInterface::BlockInterface()
+  BlockInterface::BlockInterface(void * object) : 
+    m_runObject(new URunObject(object))
   {
 
   }

@@ -175,15 +175,21 @@
     <ClCompile Include="..\..\CPPOBJECT_Common\src\UMultiSelect.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
     <ClCompile Include="src\SummaBlock.cpp" />
+    <ClCompile Include="UIntArray.cpp" />
     <ClCompile Include="ULogger.cpp" />
+    <ClCompile Include="UPtrExtArray.cpp" />
+    <ClCompile Include="URunObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CPPOBJECT_Common\src\BlockInterface.h" />
     <ClInclude Include="..\..\CPPOBJECT_Common\src\stringmethods.h" />
     <ClInclude Include="..\..\CPPOBJECT_Common\src\UConstants.h" />
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\UIntArray.h" />
     <ClInclude Include="..\..\CPPOBJECT_Common\src\ULogger.h" />
     <ClInclude Include="..\..\CPPOBJECT_Common\src\UMainModule.h" />
     <ClInclude Include="..\..\CPPOBJECT_Common\src\UMultiSelect.h" />
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\UPtrExtArray.h" />
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\URunObject.h" />
     <ClInclude Include="src\SummaBlock.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

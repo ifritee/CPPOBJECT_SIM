@@ -1,5 +1,6 @@
 #include "UMultiSelect.h"
 #include "stringmethods.h"
+#include "UConstants.h"
 
 namespace cppobj
 {
@@ -25,18 +26,10 @@ namespace cppobj
   std::vector<int> UMultiSelect::data() const
   {
     std::vector<int> returnData;
-    for (int i = 0; ; ++i) {
-      if (i >= 1000) {
-        returnData.clear();
-        break;
-      }
-      else {
-        int data = *(m_data->m_data + i);
-        if (data == 0x1DDA1AC0) {
-          break;
-        }
-        returnData.push_back(data);
-      }
+    NATIVEINT length = *((NATIVEINT *)(m_data->m_data) - 1); // Получим количество элементов (В Delphi это -1 элемент NATIVEINT)
+    for (int i = 0; i < length; ++i) {
+      int data = *(m_data->m_data + i);
+      returnData.push_back(data);
     }
     return returnData;
   }
