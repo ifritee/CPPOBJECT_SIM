@@ -87,7 +87,7 @@ uses
 
 var
   //----- Методы из библиотеки модуля -----
-  createCM : function(runObj: PVOID) : Integer; stdcall;
+  createCM : function(runObj: Pointer) : Integer; stdcall;
   destroyCM : procedure(number : Integer); stdcall;
   infoFuncCM : function(index: Integer; Action : Integer; aParameter : NATIVEINT) : NATIVEINT; stdcall;
   getParamIDCM : function(index: Integer; ParamName: PAnsiChar; var DataType:TDataType;var IsConst: boolean) : NATIVEINT; stdcall;
@@ -142,10 +142,7 @@ var
   I : Integer;
 begin
   Result := 0;
-  if Action = i_GetCount then begin
-    cY[0] := 12;
-
-  end;
+  returnCode := -1;
   if (Action = i_HaveSpetialEditor) AND (m_moduleIndex = -1) then begin
     //  Берем имя файла библиотеки
     DllInfo.Main.GetElementInfo(VisualObject, elementInfo);
