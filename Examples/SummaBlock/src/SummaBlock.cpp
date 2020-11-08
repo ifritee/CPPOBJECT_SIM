@@ -4,6 +4,7 @@
 #include "ULogger.h"
 #include "URunObject.h"
 #include "UIntArray.h"
+#include "UPtrExtArray.h"
 
 namespace cppobj
 {
@@ -32,7 +33,7 @@ namespace cppobj
         return t_fun;
       } break;
       case i_GetCount: {
-        m_runObject->cY()[0] = 15;
+        m_runObject->cY()[0] = 1;
         return 0;
       } break;
       case i_GetInit: {
@@ -159,6 +160,29 @@ namespace cppobj
 
     NATIVEINT SummaBlock::run(double& at, double& h, EWorkState workState)
     {
+      try {
+        switch (workState) {
+        case f_Stop: {
+        
+        } break;
+        case f_InitObjects: {
+        
+        } break;
+        case f_InitState: {
+        
+        } break;
+        case f_GoodStep: {
+          double& result = m_runObject->Y().data(0, 0);
+          double a1 = m_runObject->U().data(0, 0);
+          double a2 = m_runObject->U().data(1, 0);
+          result = a1 + a2;
+        } break;
+        }
+      }
+      catch (std::exception & e) {
+        ULogger::instance()->error(e.what());
+        return r_Fail;
+      }
       return r_Success;
     }
 

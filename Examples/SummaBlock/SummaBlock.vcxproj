@@ -171,14 +171,14 @@
   <ItemGroup>
     <ClCompile Include="..\..\CPPOBJECT_Common\src\BlockInterface.cpp" />
     <ClCompile Include="..\..\CPPOBJECT_Common\src\stringmethods.cpp" />
+    <ClCompile Include="..\..\CPPOBJECT_Common\src\UIntArray.cpp" />
+    <ClCompile Include="..\..\CPPOBJECT_Common\src\ULogger.cpp" />
     <ClCompile Include="..\..\CPPOBJECT_Common\src\UMainModule.cpp" />
     <ClCompile Include="..\..\CPPOBJECT_Common\src\UMultiSelect.cpp" />
+    <ClCompile Include="..\..\CPPOBJECT_Common\src\UPtrExtArray.cpp" />
+    <ClCompile Include="..\..\CPPOBJECT_Common\src\URunObject.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
     <ClCompile Include="src\SummaBlock.cpp" />
-    <ClCompile Include="UIntArray.cpp" />
-    <ClCompile Include="ULogger.cpp" />
-    <ClCompile Include="UPtrExtArray.cpp" />
-    <ClCompile Include="URunObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CPPOBJECT_Common\src\BlockInterface.h" />

@@ -25,6 +25,10 @@ namespace cppobj
     UIntArray& cU() { return *m_cU; }
     /** @brief Возвращает ссылку на Массив размерностей выходов блока */
     UIntArray& cY() { return *m_cY; }
+    /** @brief Возвращает ссылку на Массив входных данных */
+    UPtrExtArray& U() { return *m_U; }
+    /** @brief Возвращает ссылку на Массив выходных данных */
+    UPtrExtArray& Y() { return *m_Y; }
   };
 
 }

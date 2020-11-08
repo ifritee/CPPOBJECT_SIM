@@ -35,17 +35,17 @@
     <ClCompile Include="src\SummaBlock.cpp">
       <Filter>src\Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ULogger.cpp">
+    <ClCompile Include="..\..\CPPOBJECT_Common\src\UIntArray.cpp">
       <Filter>CPPOBJECT_Common</Filter>
     </ClCompile>
-    <ClCompile Include="URunObject.cpp">
-      <Filter>src\Исходные файлы</Filter>
+    <ClCompile Include="..\..\CPPOBJECT_Common\src\ULogger.cpp">
+      <Filter>CPPOBJECT_Common</Filter>
     </ClCompile>
-    <ClCompile Include="UIntArray.cpp">
-      <Filter>src\Исходные файлы</Filter>
+    <ClCompile Include="..\..\CPPOBJECT_Common\src\UPtrExtArray.cpp">
+      <Filter>CPPOBJECT_Common</Filter>
     </ClCompile>
-    <ClCompile Include="UPtrExtArray.cpp">
-      <Filter>src\Исходные файлы</Filter>
+    <ClCompile Include="..\..\CPPOBJECT_Common\src\URunObject.cpp">
+      <Filter>CPPOBJECT_Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -70,14 +70,14 @@
     <ClInclude Include="..\..\CPPOBJECT_Common\src\ULogger.h">
       <Filter>CPPOBJECT_Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\CPPOBJECT_Common\src\URunObject.h">
-      <Filter>src\Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\CPPOBJECT_Common\src\UIntArray.h">
-      <Filter>src\Файлы заголовков</Filter>
+      <Filter>CPPOBJECT_Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\CPPOBJECT_Common\src\UPtrExtArray.h">
-      <Filter>src\Файлы заголовков</Filter>
+      <Filter>CPPOBJECT_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CPPOBJECT_Common\src\URunObject.h">
+      <Filter>CPPOBJECT_Common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
