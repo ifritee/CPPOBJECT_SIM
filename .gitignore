@@ -100,9 +100,7 @@ bld/
 *.hint
 
 .vs/
-verilator/
-Demo/verilator.zip
-Demo/D*/
+*.tmp*
 
 # dita
 out/
