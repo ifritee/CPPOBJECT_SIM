@@ -33,4 +33,5 @@ namespace cppobj
     }
     return returnData;
   }
-}
+
+} // namespace cppobj

@@ -29,4 +29,4 @@ namespace cppobj
     std::vector<int> data() const;
   };
 
-}
+} // namespace cppobj

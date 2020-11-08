@@ -1,11 +1,11 @@
+#include <stdexcept>
+
 #include "BlockInterface.h"
-#include "URunObject.h"
 
 namespace cppobj
 {
 
-  BlockInterface::BlockInterface(void * object) : 
-    m_runObject(new URunObject(object))
+  BlockInterface::BlockInterface(void * object) : URunObject(object)
   {
 
   }
@@ -45,20 +45,18 @@ namespace cppobj
   {
     if (number < m_portData.size()) {
       return m_portData[number];
+    } else {
+      throw(std::out_of_range("Number of port data is failure"));
     }
-    TPortData portData;
-    portData.m_mode = -1;
-    return portData;
   }
   
   TCondPortData BlockInterface::getCondPortData(int number)
   {
     if (number < m_condPortData.size()) {
       return m_condPortData[number];
+    } else {
+      throw(std::out_of_range("Number of cond port data is failure"));
     }
-    TCondPortData condPortData;
-    condPortData.m_mode = -1;
-    return condPortData;
   }
 
-}
+} // namespace cppobj

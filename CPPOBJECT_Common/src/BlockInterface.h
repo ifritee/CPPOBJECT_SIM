@@ -6,6 +6,7 @@
 
 #include "UConstants.h"
 #include "UMultiSelect.h"
+#include "URunObject.h"
 
 namespace cppobj 
 {
@@ -14,7 +15,7 @@ namespace cppobj
 
   /** @class BlockInterface
     * @brief Интерфейс для блоков */
-  class BlockInterface
+  class BlockInterface : public URunObject
   {
   public:
     /** @brief Конструктор */
@@ -45,7 +46,6 @@ namespace cppobj
     virtual NATIVEINT run(double& at, double& h, EWorkState workState) = 0;
 
   protected:
-    URunObject * m_runObject = nullptr;
     int m_multiselectQty = 0; ///< @brief Количество необходимых мультиселектов
     std::vector<UMultiSelect* > m_multiselects; ///< @brief Набор мультиселектов
     std::vector< TPortData > m_portData; ///< @brief Данные для изменения
@@ -54,7 +54,8 @@ namespace cppobj
 
   /** @brief Функция создания объекта - не может быть 2 таких */
   extern BlockInterface * CreateBlockObject(void *);
-}
+
+} // namespace cppobj
 
 
 

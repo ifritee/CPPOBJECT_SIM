@@ -141,6 +141,13 @@ typedef struct {
   int m_portVariant;    //  вариант порта
 } TCondPortData;
 
+typedef struct {
+  NATIVEINT m_main;
+  int m_length;
+  int m_reserve;
+  NATIVEINT m_array;
+} SControlData;
+
 /** @brief тип для хранения лог-информации */
 typedef struct { std::string m_text; int m_level; } TLoggerData;
 

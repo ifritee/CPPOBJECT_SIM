@@ -9,8 +9,9 @@ namespace cppobj
   class UIntArray
   {
     void* m_object = nullptr; ///< @brief Указатель на объект TIntArray (Delphi)
-    int & m_arrayLength;  ///< @brief Длина массива
-    int & m_reserv; ///< @brief Возможно, тоже длина
+    SControlData* m_SControlData; ///< @brief Данные управления массивом
+    //int & m_arrayLength;  ///< @brief Длина массива
+    //int & m_reserv; ///< @brief Возможно, тоже длина
 
   public:
     /** @brief Конструктор с параметром 
@@ -21,4 +22,5 @@ namespace cppobj
     /** @brief Возвращает ссылку на выбранное данное, если данного нет, то выбрасывется исключение std::out_of_range */
     NATIVEINT & operator[] (int);
   };
-}
+
+} // namespace cppobj

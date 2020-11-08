@@ -3,8 +3,6 @@
 #include "SummaBlock.h"
 #include "ULogger.h"
 #include "URunObject.h"
-#include "UIntArray.h"
-#include "UPtrExtArray.h"
 
 namespace cppobj
 {
@@ -33,7 +31,7 @@ namespace cppobj
         return t_fun;
       } break;
       case i_GetCount: {
-        m_runObject->cY()[0] = 1;
+        cY(0) = 1;
         return 0;
       } break;
       case i_GetInit: {
@@ -172,9 +170,9 @@ namespace cppobj
         
         } break;
         case f_GoodStep: {
-          double& result = m_runObject->Y().data(0, 0);
-          double a1 = m_runObject->U().data(0, 0);
-          double a2 = m_runObject->U().data(1, 0);
+          double& result = Y(0, 0);
+          double a1 = U(0, 0);
+          double a2 = U(1, 0);
           result = a1 + a2;
         } break;
         }

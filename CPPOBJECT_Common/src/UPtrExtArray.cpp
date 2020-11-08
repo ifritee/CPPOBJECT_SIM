@@ -1,7 +1,6 @@
 #include <stdexcept>
 
 #include "UPtrExtArray.h"
-#include "UConstants.h"
 
 namespace cppobj
 {
@@ -18,7 +17,7 @@ namespace cppobj
 
   double& UPtrExtArray::data(unsigned int channel, int index)
   {
-    NATIVEINT* data = (NATIVEINT*)(*((NATIVEINT *)m_object));
+    NATIVEINT* data = reinterpret_cast<NATIVEINT*>(*(reinterpret_cast<NATIVEINT *>(m_object)));
     if (*data == 0) {
       throw(std::runtime_error("Pointer to data is ZERO!"));
     }
@@ -26,15 +25,9 @@ namespace cppobj
     if (channel >= chanMax) {
       throw(std::out_of_range("Channel number is failure"));
     }
-    NATIVEINT * arrData = (NATIVEINT*)*(data + channel);
-    int arrLength = *((int*)(arrData + 1) + 0);
-    int reserve = *((int*)(arrData + 1) + 1);
-    if (index >= arrLength) {
-      throw(std::out_of_range("Index of data is failure"));
-    }
-    NATIVEINT* shift = (NATIVEINT *)((int *)(arrData + 1) + 2);
-    double* valData = ((double*)*(shift) + index);
-
+    m_SControlData = reinterpret_cast<SControlData*>(*(data + channel));
+    double* valData = reinterpret_cast<double *>(m_SControlData->m_array);
     return *valData;
   }
-}
+
+} // namespace cppobj

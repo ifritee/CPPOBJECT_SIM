@@ -1,8 +1,9 @@
 #pragma once
 
+#include "UConstants.h"
+
 namespace cppobj
 {
-
   class UIntArray;
   class UPtrExtArray;
 
@@ -10,11 +11,11 @@ namespace cppobj
     * @brief Класс-обработчик данных из Delphi TCppObjectBlock (TRunObject) */
   class URunObject
   {
-    void* m_creatorObject; ///< @brief Объект создатель
-    UIntArray* m_cU;  ///< @brief Массив размерностей входов блока
-    UPtrExtArray* m_U;  ///< @brief Массив входов блока
-    UIntArray* m_cY;  ///< @brief Массив размерностей выходов блока
-    UPtrExtArray* m_Y;  ///< @brief Массив выходов блока
+    void* m_creatorObject;  ///< @brief Объект создатель
+    UIntArray* m_cU;        ///< @brief Массив размерностей входов блока
+    UPtrExtArray* m_U;      ///< @brief Массив входов блока
+    UIntArray* m_cY;        ///< @brief Массив размерностей выходов блока
+    UPtrExtArray* m_Y;      ///< @brief Массив выходов блока
 
   public:
     /** @brief Конструктор с параметром - указатель на объект TCppObjectBlock */
@@ -22,13 +23,13 @@ namespace cppobj
     /** @brief Деструктор */
     virtual ~URunObject();
     /** @brief Возвращает ссылку на Массив размерностей входов блока */
-    UIntArray& cU() { return *m_cU; }
+    NATIVEINT& cU(int index);
     /** @brief Возвращает ссылку на Массив размерностей выходов блока */
-    UIntArray& cY() { return *m_cY; }
+    NATIVEINT& cY(int index);
     /** @brief Возвращает ссылку на Массив входных данных */
-    UPtrExtArray& U() { return *m_U; }
+    double& U(unsigned int channel, int index);
     /** @brief Возвращает ссылку на Массив выходных данных */
-    UPtrExtArray& Y() { return *m_Y; }
+    double& Y(unsigned int channel, int index);
   };
 
-}
+} // namespace cppobj

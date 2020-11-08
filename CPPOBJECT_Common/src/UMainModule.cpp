@@ -1,5 +1,6 @@
 #include <vector>
 #include <string.h>
+#include <stdexcept>
 
 #include "UMainModule.h"
 #include "BlockInterface.h"
@@ -101,24 +102,38 @@ int getCondPortDataQty(int index)
 
 TPortData getPortData(int index, int number)
 {
-	if (index >= 0 && index < static_cast<int>(CppObjectHandles_vec.size()) && CppObjectHandles_vec[index] != nullptr) {
-		BlockInterface* process = CppObjectHandles_vec[index];
-		return process->getPortData(number);
+	try {
+		if (index >= 0 && index < static_cast<int>(CppObjectHandles_vec.size()) && CppObjectHandles_vec[index] != nullptr) {
+			BlockInterface* process = CppObjectHandles_vec[index];
+			return process->getPortData(number);
+		} else {
+			throw(std::out_of_range("Index of module is failure"));
+		}
 	}
-	TPortData portData;
-	portData.m_mode = -1; // Условная ошибка
-	return portData; // Даже если ошибка - вернем 0, чтоб не вылететь за память
+	catch (std::exception& e) {
+		ULogger::instance()->error(e.what());
+		TPortData portData;
+		portData.m_mode = -1; // Условная ошибка
+		return portData;
+	}
 }
 
 TCondPortData getCondPortData(int index, int number)
 {
-	if (index >= 0 && index < static_cast<int>(CppObjectHandles_vec.size()) && CppObjectHandles_vec[index] != nullptr) {
-		BlockInterface* process = CppObjectHandles_vec[index];
-		return process->getCondPortData(number);
+	try {
+		if (index >= 0 && index < static_cast<int>(CppObjectHandles_vec.size()) && CppObjectHandles_vec[index] != nullptr) {
+			BlockInterface* process = CppObjectHandles_vec[index];
+			return process->getCondPortData(number);
+		} else {
+			throw(std::out_of_range("Index of module is failure"));
+		}
 	}
-	TCondPortData condPortData;
-	condPortData.m_mode = -1; // Условная ошибка
-	return condPortData; // Даже если ошибка - вернем 0, чтоб не вылететь за память
+	catch (std::exception& e) {
+		ULogger::instance()->error(e.what());
+		TCondPortData condPortData;
+		condPortData.m_mode = -1; // Условная ошибка
+		return condPortData;
+	}
 }
 
 NATIVEINT runFunc(int index, double& at, double& h, int action)
