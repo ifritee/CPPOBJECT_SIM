@@ -32,7 +32,8 @@ namespace cppobj
     if (index >= arrLength) {
       throw(std::out_of_range("Index of data is failure"));
     }
-    double* valData = ((double*)*(arrData + 2) + index);
+    NATIVEINT* shift = (NATIVEINT *)((int *)(arrData + 1) + 2);
+    double* valData = ((double*)*(shift) + index);
 
     return *valData;
   }

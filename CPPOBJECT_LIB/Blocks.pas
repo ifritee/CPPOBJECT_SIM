@@ -67,7 +67,7 @@ type
     m_error: Array [0..MAX_ER_LENGTH - 1] of AnsiChar;
     //----- Методы библиотеки -----
     // Загрузка модуля
-    procedure LoadModuleLibrary(name : AnsiString);
+    procedure LoadModuleLibrary(name : String);
     procedure ShowLog();
   end;
 
@@ -151,7 +151,7 @@ begin
       ErrorEvent(txtCppObj_er_NoSetDll, msError, VisualObject);
       Exit;
     end;
-    LoadModuleLibrary(AnsiString(DllInfo.Main.SearchPath^) + AnsiString(List[3]));
+    LoadModuleLibrary(DllInfo.Main.SearchPath^ + List[3]);
     if @createCM <> nil then begin
       m_moduleIndex := createCM(Pointer(self));
     end;
@@ -246,7 +246,7 @@ begin
   end;
 end;
 
-procedure TCppObjectBlock.LoadModuleLibrary(name : AnsiString);
+procedure TCppObjectBlock.LoadModuleLibrary(name : String);
 var
   fullPathTo: String;
 begin
@@ -254,11 +254,11 @@ begin
     FreeLibrary(m_libHanle);
     m_libHanle := 0;
   end;
-  if NOT FileExists(String(name)) then begin
+  if NOT FileExists(name) then begin
     ErrorEvent(txtCppObj_er_ModuleNotFound, msError, VisualObject);
     Exit;
   end;
-  fullPathTo := ExpandFileName(String(name));
+  fullPathTo := ExpandFileName(name);
   m_libHanle := LoadLibrary(PChar(fullPathTo));
   if m_libHanle = 0 then begin
     ErrorEvent(SysErrorMessage(GetLastError), msError, VisualObject);
