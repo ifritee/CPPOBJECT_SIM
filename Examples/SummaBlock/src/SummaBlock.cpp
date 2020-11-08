@@ -31,7 +31,7 @@ namespace cppobj
         return t_fun;
       } break;
       case i_GetCount: {
-        cY(0) = 1;
+        cY(0) = 1; // Зададим размерность первого выходного порта
         return 0;
       } break;
       case i_GetInit: {
@@ -135,25 +135,10 @@ namespace cppobj
 
     void SummaBlock::editFunc()
     {
+      BlockInterface::editFunc();
       //----- Пример управление визуализацией -----
-      /*m_portData.clear();
-      TPortData portData;
-      portData.m_count = 1;
-      portData.m_mode = 0;
-      portData.m_side = 0;
-      portData.m_type = 0;
-      m_portData.push_back(portData);*/
-
-      //----- Пример управление визуализацией -----
-      /*m_condPortData.clear();
-      TCondPortData data;
-      data.m_count = 1;
-      data.m_mode = 0;
-      strcpy_s(data.m_name, "Hello");
-      data.m_portVariant = 0;
-      data.m_side = 0;
-      data.m_type = 0;
-      m_condPortData.push_back(data);*/
+      //setPortCount(1, 0, 0, 0);
+      //setCondPortCount(1, 0, 0, 0,"Hello", 0);
     }
 
     NATIVEINT SummaBlock::run(double& at, double& h, EWorkState workState)
